@@ -15,4 +15,24 @@ RSpec.describe CssColorContrast do
       end
     end
   end
+
+  describe '.relative_luminance' do
+    it 'expects to calculate the relative luminance fo colors' do
+      [
+        [[0, 0, 0], 0],
+        ['#000', 0],
+        ['black', 0],
+        ['rgb(0, 0, 0)', 0],
+        ['rgb(0 0 0)', 0],
+        ['hsl(0deg, 0%, 0%)', 0],
+        ['hwb(0deg 0% 100%)', 0],
+        [[255, 255, 0], 0.9278],
+        ['hsl(60deg 100% 50%)', 0.9278],
+        ['hwb(60deg 0% 0%)', 0.9278],
+        [[255, 255,255], 1]
+      ].each do |color, luminance|
+        expect(CssColorContrast.relative_luminance(color)).to eq(luminance)
+      end
+    end
+  end
 end
