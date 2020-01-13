@@ -1,0 +1,79 @@
+# CssColorContrast
+
+From 2 colors, calculates [the contrast ratio defined for WCAG 2.0](https://www.w3.org/TR/WCAG20/#contrast-ratiodef).
+
+Hexadecimal notation, RGB/HSL/HWB functions are supported as input formats.
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'css_color_contrast'
+```
+
+And then execute:
+
+    $ bundle install
+
+Or install it yourself as:
+
+    $ gem install css_color_contrast
+
+## Usage
+
+### Calculate the contrast ratio
+
+For example, if you want to calculate the contrast ratio between yellow and black:
+
+```ruby
+require 'css_color_contrast'
+
+CssColorContrast.ratio('#ff0', [0, 0, 0])
+# => 19.555999999999997
+
+CssColorContrast.ratio('rgb(255, 255, 0)', 'black')
+# => 19.555999999999997
+
+CssColorContrast.ratio('hsl(60deg, 100%, 50%)', 'hwb(60deg 0% 100%)')
+# => 19.555999999999997
+```
+
+The following formats are supported for the arguments of `CssColorContrast.ratio()`.
+
+* RGB values as an Array of Integers: [255, 255, 0], [0, 0, 0], etc.
+* RGB values in hexadecimal notation: #ff0, #ffff00, #FF0, etc.
+* RGB values in functional notation: rgb(255, 255, 0), rgb(255 255 0), etc.
+* HSL colors in functional notation: hsl(60deg, 100%, 50%), hsl(60 100% 50%), etc.
+* [Experimental] HWB colors in functional notation: hwb(60deg 0% 0%), hwb(60 0% 0%), etc.
+* [Extended color keywords](https://www.w3.org/TR/css-color-3/#svg-color): white, black, red, etc.
+
+### Calculate the relative luminance
+
+You can also calculate the relative luminance of a given color as follows:
+
+```ruby
+require 'css_color_contrast'
+
+CssColorContrast.relative_luminance('#ff0')
+# => 0.9278
+```
+
+## Development
+
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/nico-hn/css_color_contrast. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/nico-hn/css_color_contrast/blob/master/CODE_OF_CONDUCT.md).
+
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+## Code of Conduct
+
+Everyone interacting in the CssColorContrast project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/nico-hn/css_color_contrast/blob/master/CODE_OF_CONDUCT.md).
