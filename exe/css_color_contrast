@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+
+require 'css_color_contrast'
