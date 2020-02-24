@@ -2,6 +2,7 @@
 
 require 'css_color_contrast/version'
 require 'color_contrast_calc'
+require 'css_color_contrast/color'
 
 ##
 # Provide methods to calculate the contrast ratio
@@ -40,7 +41,7 @@ module CssColorContrast
   # @return [Float] Relative luminance of the passed color.
 
   def self.relative_luminance(color)
-    ColorContrastCalc::Color.as_color(color).relative_luminance
+    Color.as_color(color).relative_luminance
   end
 
   ##
@@ -57,7 +58,7 @@ module CssColorContrast
 
   def self.adjust_lightness(fixed_color, color_to_adjust, level = 4.5)
     fixed, to_adjust = [fixed_color, color_to_adjust].map do |color|
-      ColorContrastCalc::Color.as_color(color)
+      Color.as_color(color)
     end
 
     fixed.find_lightness_threshold(to_adjust, level).hex
