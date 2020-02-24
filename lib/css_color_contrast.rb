@@ -42,4 +42,24 @@ module CssColorContrast
   def self.relative_luminance(color)
     ColorContrastCalc::Color.as_color(color).relative_luminance
   end
+
+  ##
+  # Adjust the lightness of the second color to satisfy a specified
+  # level of contrast ratio.
+  #
+  # @param fixed_color [String, Array<Integer, Float>] The color that
+  #   remains unchanged
+  # @param color_to_adjust [String, Array<Integer, Float>] The color of
+  #   which the lightness is to be adjusted
+  # @param level [Integer, Float] The level of contrast ratio to be
+  #   satisfied, such as 3.0, 4.5, 7.0
+  # @return [String] RGB value in hexadecimal notation
+
+  def self.adjust_lightness(fixed_color, color_to_adjust, level = 4.5)
+    fixed, to_adjust = [fixed_color, color_to_adjust].map do |color|
+      ColorContrastCalc::Color.as_color(color)
+    end
+
+    fixed.find_lightness_threshold(to_adjust, level).hex
+  end
 end

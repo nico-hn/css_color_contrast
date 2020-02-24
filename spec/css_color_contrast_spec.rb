@@ -35,4 +35,17 @@ RSpec.describe CssColorContrast do
       end
     end
   end
+
+  describe '.adjust_lightness' do
+    yellow = 'rgb(255, 255, 0)'
+    lime = 'rgb(0, 255, 0)'
+    aa = 4.5
+
+    it 'expects to return a lightness adjusted new color' do
+      adjusted = CssColorContrast.adjust_lightness(yellow, lime, aa)
+
+      expect(CssColorContrast.ratio(yellow, adjusted)).to be > aa
+      expect(adjusted).to match(/^#[0-9a-f]+/i)
+    end
+  end
 end
