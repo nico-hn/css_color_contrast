@@ -45,7 +45,7 @@ RSpec.describe CssColorContrast do
       adjusted = CssColorContrast.adjust_lightness(yellow, lime, aa)
 
       expect(CssColorContrast.ratio(yellow, adjusted)).to be > aa
-      expect(adjusted).to match(/^#[0-9a-f]+/i)
+      expect(adjusted.hex).to match(/^#[0-9a-f]+/i)
     end
 
     it 'expects to return nil when a satisfying color is not found' do

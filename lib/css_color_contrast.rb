@@ -52,9 +52,10 @@ module CssColorContrast
   #   remains unchanged
   # @param color_to_adjust [String, Array<Integer, Float>] The color of
   #   which the lightness is to be adjusted
-  # @param level [Integer, Float] The level of contrast ratio to be
-  #   satisfied, such as 3.0, 4.5, 7.0
-  # @return [String] RGB value in hexadecimal notation
+  # @param level [Integer, Float] The contrast ratio to be satisfied,
+  #   such as 3.0, 4.5, 7.0
+  # @return [Color, nil] The color of which the contrast ratio against
+  #   fixed_color equals or is slightly greater than the specified level.
 
   def self.adjust_lightness(fixed_color, color_to_adjust, level = 4.5)
     fixed, to_adjust = [fixed_color, color_to_adjust].map do |color|
@@ -64,6 +65,6 @@ module CssColorContrast
     adjusted = fixed.find_lightness_threshold(to_adjust, level)
     if_satisfied = fixed.contrast_ratio_against(adjusted) >= level
 
-    if_satisfied ? adjusted.hex : nil
+    if_satisfied ? adjusted : nil
   end
 end
