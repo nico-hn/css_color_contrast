@@ -61,6 +61,9 @@ module CssColorContrast
       Color.as_color(color)
     end
 
-    fixed.find_lightness_threshold(to_adjust, level).hex
+    adjusted = fixed.find_lightness_threshold(to_adjust, level)
+    if_satisfied = fixed.contrast_ratio_against(adjusted) >= level
+
+    if_satisfied ? adjusted.hex : nil
   end
 end
