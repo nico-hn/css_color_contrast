@@ -16,6 +16,31 @@ RSpec.describe CssColorContrast do
     end
   end
 
+  describe '.ratio_with_opacity' do
+    yellow = 'hsl(60deg 100% 50% / 1.0)'
+    lime = 'hsl(120deg 100% 50% / 0.5)'
+
+    it 'expects to calculate the contrast ratio between transparent colors' do
+      [
+        [yellow, lime, 1.18],
+        [lime, yellow, 1.20]
+      ].each do |fore, back, expected|
+        ratio = CssColorContrast.ratio_with_opacity(fore, back)
+        expect(ratio).to within(0.01).of(expected)
+      end
+    end
+
+    it 'expects to accept black as a base color' do
+      [
+        [yellow, lime, 4.78],
+        [lime, yellow, 1.20]
+      ].each do |fore, back, expected|
+        ratio = CssColorContrast.ratio_with_opacity(fore, back, 'black')
+        expect(ratio).to within(0.01).of(expected)
+      end
+    end
+  end
+
   describe '.relative_luminance' do
     it 'expects to calculate the relative luminance fo colors' do
       [

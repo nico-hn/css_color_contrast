@@ -29,6 +29,27 @@ module CssColorContrast
   end
 
   ##
+  # Calculate the contrast ratio between two transparent colors.
+  #
+  # For the calculation of contrast ratio between foreground and
+  # background colors, you need another color which is placed below
+  # the former two colors, because the third color filters through
+  # the overlaid colors.
+  #
+  # @param foreground [String, Array<Integer>, Color] The uppermost
+  #   color such as "rgb(255, 255, 0, 0.5)" or "hsl(60 100% 50% / 50%)"
+  # @param background [String, Array<Integer>, Color] The color placed
+  #   between the others
+  # @param base [String, Array<Integer>, Color] The color placed in
+  #   the bottom. When the backgound is completely opaque, this color
+  #   is ignored.
+  # @return [Float] Contrast ratio
+
+  def self.ratio_with_opacity(foreground, background, base = Color::WHITE)
+    ColorContrastCalc.contrast_ratio_with_opacity(foreground, background, base)
+  end
+
+  ##
   # Calculate the relative luminance of a color.
   #
   # The definition of relative luminance is given at
