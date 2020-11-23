@@ -14,4 +14,4 @@ jobs:
   include:
   - rvm: jruby-head
     before_install:
-      - bundle install rake -v 13.0.0
+      - bundle install rake
