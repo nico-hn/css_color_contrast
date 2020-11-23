@@ -59,6 +59,25 @@ CssColorContrast.relative_luminance('#ff0')
 # => 0.9278
 ```
 
+### Command-Line Interface
+
+A command-line tool, ```css_color_contrast``` is provided for a demonstration purpose.
+
+Invoke it as follows:
+
+```bash
+$ css_color_contrast
+To calculate the contrast ratio between 2 colors, enter the following command:
+
+  > ratio: color1 color2
+
+For the values of color1 and color2, hexadecimal notation, RGB/HSL/HWB
+functions and the extended color keywords are supported.
+
+To finish the program, enter 'exit'.
+> 
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

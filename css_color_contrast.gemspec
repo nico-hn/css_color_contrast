@@ -10,6 +10,7 @@ Gem::Specification.new do |spec|
     Utility to calculate the contrast ratio between 2 colors, for checking
     the level of conformance to the WCAG 2.0 criteria.
     Hexadecimal notation, RGB/HSL/HWB functions are supported as input formats.
+    And a command-line interface is provided for a demonstration purpose.
   SUMMARY
   #spec.description   = %q{TODO: Write a longer description or delete this line.}
   spec.homepage      = "https://github.com/nico-hn/css_color_contrast/"
