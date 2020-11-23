@@ -65,6 +65,24 @@ RSpec.describe CssColorContrast do
           expect(adjust_func.evaluate.hex).to eq('#ee0000')
         end
       end
+
+      describe CssColorContrast::CommandInterpreter::Function::Info do
+        let(:yellow_info) { Parser.new('info: rgb(255 255 0)') }
+        expected = <<~EXPECTED
+        ----
+        yellow
+        #ffff00
+        rgb(255,255,0)
+        hsl(60.000,100.000%,50.000%)
+        EXPECTED
+
+        it 'expects to return the information about yellow' do
+          yellow_info.parse
+          info_func = yellow_info.root_node
+
+          expect(info_func.evaluate).to eq(expected)
+        end
+      end
     end
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'strscan'
+require 'stringio'
 require 'css_color_contrast'
 
 module CssColorContrast
@@ -45,6 +46,17 @@ module CssColorContrast
       end
 
       class Info < self
+        def evaluate
+          colors = @params.map {|c| Color.as_color(c) }
+          out = StringIO.new
+
+          colors.each do |c|
+            out.puts '----'
+            out.puts [c.name, c.hex, c.to_s(10)]
+            out.puts format('hsl(%3.3f,%3.3f%%,%3.3f%%)', *c.hsl)
+          end
+          out.string
+        end
       end
 
       def self.create(name)
