@@ -42,7 +42,7 @@ RSpec.describe CssColorContrast do
   end
 
   describe '.relative_luminance' do
-    it 'expects to calculate the relative luminance fo colors' do
+    it 'expects to calculate the relative luminance of colors' do
       [
         [[0, 0, 0], 0],
         ['#000', 0],
