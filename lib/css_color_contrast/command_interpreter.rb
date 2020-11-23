@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'strscan'
-require 'color_contrast_calc'
+require 'css_color_contrast'
 
 module CssColorContrast
   module CommandInterpreter
@@ -31,6 +31,19 @@ module CssColorContrast
         end
       end
 
+      class AdjustLightness < self
+        def evaluate
+          fixed, to_adjust, ratio = @params
+          if ratio && /\A\d+(\.\d+)?/.match?(ratio)
+            ratio = ratio.to_f
+          else
+            ratio = 4.5
+          end
+
+          CssColorContrast.adjust_lightness(fixed, to_adjust, ratio)
+        end
+      end
+
       class Info < self
       end
 
@@ -38,6 +51,8 @@ module CssColorContrast
         case name
         when 'ratio'
           Ratio.new(name)
+        when 'adjust'
+          AdjustLightness.new(name)
         when 'info'
           Info.new(name)
         end

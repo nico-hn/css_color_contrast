@@ -54,6 +54,17 @@ RSpec.describe CssColorContrast do
           expect(ratio_func.evaluate).to within(0.01).of(19.55)
         end
       end
+
+      describe CssColorContrast::CommandInterpreter::Function::AdjustLightness do
+        let(:red_against_white) { Parser.new('adjust: white red') }
+
+        it 'expects to return a darker red' do
+          red_against_white.parse
+          adjust_func = red_against_white.root_node
+
+          expect(adjust_func.evaluate.hex).to eq('#ee0000')
+        end
+      end
     end
   end
 end
