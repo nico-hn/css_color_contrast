@@ -36,6 +36,10 @@ module CssColorContrast
         @node_tree = []
       end
 
+      def root_node
+        @node_tree.first
+      end
+
       def read_label
         cur_pos = @scanner.pos
         label = @scanner.scan(TokenRe::LABEL)

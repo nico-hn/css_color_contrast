@@ -27,7 +27,7 @@ RSpec.describe CssColorContrast do
       describe '#parse' do
         it 'expects to parse a line of command' do
           info_rgb.parse
-          func = info_rgb.node_tree.first
+          func = info_rgb.root_node
 
           expect(func).to be_a(Function)
           expect(func.params.first).to be_a(ColorContrastCalc::Color)
@@ -35,7 +35,7 @@ RSpec.describe CssColorContrast do
 
         it 'expects to ignore extra spaces at the head of line' do
           command_with_extra_spaces.parse
-          func = command_with_extra_spaces.node_tree.first
+          func = command_with_extra_spaces.root_node
 
           expect(func).to be_a(Function)
           expect(func.name).to eq('ratio')
