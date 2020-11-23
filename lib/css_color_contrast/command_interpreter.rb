@@ -33,13 +33,15 @@ module CssColorContrast
       end
 
       class AdjustLightness < self
+        DEFAULT_RATIO = 4.5
+        def ratio_given(ratio)
+          ratio && /\A\d+(\.\d+)?/.match?(ratio)
+        end
+
         def evaluate
           fixed, to_adjust, ratio = @params
-          if ratio && /\A\d+(\.\d+)?/.match?(ratio)
-            ratio = ratio.to_f
-          else
-            ratio = 4.5
-          end
+
+          ratio = ratio_given(ratio) ? ratio.to_f : DEFAULT_RATIO
 
           CssColorContrast.adjust_lightness(fixed, to_adjust, ratio)
         end
