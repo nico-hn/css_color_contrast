@@ -10,6 +10,14 @@ RSpec.describe CssColorContrast do
       let(:command_with_extra_spaces) { Parser.new(' ratio: #ff0 #000') }
       let(:colors) { Parser.new('rgb(255 255 0) #000') }
 
+      describe '.parse!' do
+        let(:yellow_and_black_ratio) { Parser.parse!('ratio: #ff0 #000') }
+
+        it 'expects to return a function' do
+          expect(yellow_and_black_ratio).to be_a(Function::Ratio)
+        end
+      end
+
       describe '#read_label' do
         it 'expects to read a label' do
           info_rgb.read_label

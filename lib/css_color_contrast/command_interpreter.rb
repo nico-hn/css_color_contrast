@@ -74,6 +74,10 @@ module CssColorContrast
     end
 
     class Parser
+      def self.parse!(line)
+        self.new(line).parse!.root_node
+      end
+
       attr_reader :tokens
       attr_reader :node_tree
 
