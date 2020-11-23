@@ -98,7 +98,7 @@ module CssColorContrast
 
       def read_color_function(cur_pos)
         @scanner.pos = cur_pos
-        color = ColorContrastCalc.color_from(@scanner.scan_until(/\)/))
+        color = Color.as_color(@scanner.scan_until(/\)/))
       end
 
       def read_separator
