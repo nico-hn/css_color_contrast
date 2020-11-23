@@ -24,18 +24,16 @@ RSpec.describe CssColorContrast do
         end
       end
 
-      describe '#parse' do
+      describe '#parse!' do
         it 'expects to parse a line of command' do
-          info_rgb.parse
-          func = info_rgb.root_node
+          func = info_rgb.parse!.root_node
 
           expect(func).to be_a(Function)
           expect(func.params.first).to be_a(ColorContrastCalc::Color)
         end
 
         it 'expects to ignore extra spaces at the head of line' do
-          command_with_extra_spaces.parse
-          func = command_with_extra_spaces.root_node
+          func = command_with_extra_spaces.parse!.root_node
 
           expect(func).to be_a(Function)
           expect(func.name).to eq('ratio')
@@ -48,8 +46,7 @@ RSpec.describe CssColorContrast do
         let(:yellow_black_ratio) { Parser.new('ratio: rgb(255 255 0) #000') }
 
         it 'expects to return the contrast ratio between yellow and black' do
-          yellow_black_ratio.parse
-          ratio_func = yellow_black_ratio.root_node
+          ratio_func = yellow_black_ratio.parse!.root_node
 
           expect(ratio_func.evaluate).to within(0.01).of(19.55)
         end
@@ -60,17 +57,14 @@ RSpec.describe CssColorContrast do
         let(:with_default_ratio) { Parser.new('adjust: white red 4.5') }
 
         it 'expects to return a darker red' do
-          red_against_white.parse
-          adjust_func = red_against_white.root_node
+          adjust_func = red_against_white.parse!.root_node
 
           expect(adjust_func.evaluate.hex).to eq('#ee0000')
         end
 
         it 'expects to set the default ratio to 4.5' do
-          red_against_white.parse
-          implicit = red_against_white.root_node
-          with_default_ratio.parse
-          explicit = with_default_ratio.root_node
+          implicit = red_against_white.parse!.root_node
+          explicit = with_default_ratio.parse!.root_node
 
           expect(explicit.evaluate.hex).to eq(implicit.evaluate.hex)
         end
@@ -87,8 +81,7 @@ RSpec.describe CssColorContrast do
         EXPECTED
 
         it 'expects to return the information about yellow' do
-          yellow_info.parse
-          info_func = yellow_info.root_node
+          info_func = yellow_info.parse!.root_node
 
           expect(info_func.evaluate).to eq(expected)
         end

@@ -118,10 +118,11 @@ module CssColorContrast
         @scanner.scan(TokenRe::SPACE)
       end
 
-      def parse
+      def parse!
         ignore_space
         read_label
         read_separator
+        self
       end
     end
   end
