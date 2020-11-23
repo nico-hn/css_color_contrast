@@ -1,3 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'css_color_contrast'
+require 'css_color_contrast/cli'
+
+module CssColorContrast
+  Cli.start
+end
