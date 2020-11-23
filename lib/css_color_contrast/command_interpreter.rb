@@ -63,7 +63,12 @@ module CssColorContrast
         read_separator unless @tokens.empty?
       end
 
+      def ignore_space
+        @scanner.scan(TokenRe::SPACE)
+      end
+
       def parse
+        ignore_space
         read_label
         read_separator
       end

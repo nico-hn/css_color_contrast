@@ -7,6 +7,7 @@ RSpec.describe CssColorContrast do
   describe CssColorContrast::CommandInterpreter do
     describe CssColorContrast::CommandInterpreter::Parser do
       let(:info_rgb) { Parser.new('info: rgb(255 255 0)') }
+      let(:command_with_extra_spaces) { Parser.new(' ratio: #ff0 #000') }
       let(:colors) { Parser.new('rgb(255 255 0) #000') }
 
       describe '#read_label' do
@@ -30,6 +31,14 @@ RSpec.describe CssColorContrast do
 
           expect(func).to be_a(Function)
           expect(func.params.first).to be_a(ColorContrastCalc::Color)
+        end
+
+        it 'expects to ignore extra spaces at the head of line' do
+          command_with_extra_spaces.parse
+          func = command_with_extra_spaces.node_tree.first
+
+          expect(func).to be_a(Function)
+          expect(func.name).to eq('ratio')
         end
       end
     end
