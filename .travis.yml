@@ -7,7 +7,10 @@ rvm:
   - 2.6.0
   - 2.7.0
   - ruby-head
-  - jruby-head
 before_install:
   - yes | gem update --system --force
   - gem install bundler
+jobs:
+  include:
+  - rvm: jruby-head
+    script: rake
