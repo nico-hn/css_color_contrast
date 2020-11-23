@@ -24,6 +24,24 @@ module CssColorContrast
       def push(param)
         @params.push(param)
       end
+
+      class Ratio < self
+        def evaluate
+          ColorContrastCalc.contrast_ratio(*@params)
+        end
+      end
+
+      class Info < self
+      end
+
+      def self.create(name)
+        case name
+        when 'ratio'
+          Ratio.new(name)
+        when 'info'
+          Info.new(name)
+        end
+      end
     end
 
     class Parser
@@ -58,7 +76,7 @@ module CssColorContrast
 
       def read_separator
         if @scanner.scan(TokenRe::FUNC_HEAD)
-          @node_tree.push(Function.new(@tokens.pop))
+          @node_tree.push(Function.create(@tokens.pop))
         elsif @scanner.scan(TokenRe::SPACE) || @scanner.eos?
           @node_tree.last.push(@tokens.pop)
         end

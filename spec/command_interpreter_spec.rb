@@ -42,5 +42,18 @@ RSpec.describe CssColorContrast do
         end
       end
     end
+
+    describe CssColorContrast::CommandInterpreter::Function do
+      describe CssColorContrast::CommandInterpreter::Function::Ratio do
+        let(:yellow_black_ratio) { Parser.new('ratio: rgb(255 255 0) #000') }
+
+        it 'expects to return the contrast ratio between yellow and black' do
+          yellow_black_ratio.parse
+          ratio_func = yellow_black_ratio.root_node
+
+          expect(ratio_func.evaluate).to within(0.01).of(19.55)
+        end
+      end
+    end
   end
 end
