@@ -13,4 +13,4 @@ before_install:
 jobs:
   include:
   - rvm: jruby-head
-    script: rake -I$BUNDLE_PATH
+    script: rake -I${BUNDLE_PATH:-vendor/bundle}
