@@ -101,6 +101,14 @@ RSpec.describe CssColorContrast do
 
           expect(func.evaluate).to match(/yellow/)
         end
+
+        it 'should accept a HWB function as a parameter' do
+          command = 'info: hwb(60 0% 0%)'
+
+          func = Parser.new(command).parse!.root_node
+
+          expect(func.evaluate).to match(/yellow/)
+        end
       end
     end
   end
