@@ -93,6 +93,14 @@ RSpec.describe CssColorContrast do
 
           expect(info_func.evaluate).to eq(expected)
         end
+
+        it 'should accept a HSL function as a parameter' do
+          command = 'info: hsl(60 100% 50%)'
+
+          func = Parser.new(command).parse!.root_node
+
+          expect(func.evaluate).to match(/yellow/)
+        end
       end
     end
   end

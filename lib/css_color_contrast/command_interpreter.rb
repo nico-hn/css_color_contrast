@@ -10,7 +10,7 @@ module CssColorContrast
       FUNC_HEAD = /:\s*/
       LABEL = /[^\s:()]+/
       SPACE = /\s+/
-      COLOR_SCHEME = /(rgba?|hwb)/i
+      COLOR_SCHEME = /(rgba?|hsl|hwb)/i
     end
 
     class Function
