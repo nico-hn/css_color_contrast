@@ -59,7 +59,7 @@ CssColorContrast.relative_luminance('#ff0')
 # => 0.9278
 ```
 
-### Command-Line Interface
+## Command-line interface
 
 A command-line tool, ```css_color_contrast``` is provided for a demonstration purpose.
 
@@ -77,6 +77,46 @@ functions and the extended color keywords are supported.
 To finish the program, enter 'exit'.
 > 
 ```
+
+### Commands
+
+#### ratio:
+
+Calculate the contrast ratio between two colors as in the next case:
+
+```bash
+> ratio: rgb(255 255 0) black
+19.555999999999997
+> 
+```
+
+#### adjust:
+
+It takes 3 arguments, 2 colors and a contrast ratio to be satisfied.
+
+In the example below, it tries to adjust the lightness of the second color so
+that the contrast ratio between the 2 colors is just above the target ratio.
+
+```bash
+> adjust: white red 4.5
+#ee0000
+> 
+```
+#### info:
+
+Print the properties of a given color:
+
+```bash
+> info: #ff0
+----
+yellow
+#ffff00
+rgb(255,255,0)
+hsl(60.000,100.000%,50.000%)
+> 
+```
+
+When the 3rd argument is omitted, it defaults to 4.5.
 
 ## Development
 
