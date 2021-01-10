@@ -53,9 +53,11 @@ module CssColorContrast
           out = StringIO.new
 
           colors.each do |c|
-            out.puts '----'
-            out.puts [c.name, c.hex, c.to_s(10)]
-            out.puts format('hsl(%3.3f,%3.3f%%,%3.3f%%)', *c.hsl)
+            out.puts '---'
+            out.puts [:name, :hex, :rgb].zip([c.name, c.hex, c.to_s(10)])
+                       .map {|v| v.join(': ') }
+            out.puts format('hsl: hsl(%3.2f,%3.2f%%,%3.2f%%)', *c.hsl)
+            out.puts format('hwb: hwb(%3.2f,%3.2f%%,%3.2f%%)', *c.hwb)
           end
           out.string
         end
