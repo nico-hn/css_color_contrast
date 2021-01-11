@@ -85,15 +85,45 @@ RSpec.describe CssColorContrast do
           end
         end
 
-        context 'When a value is assigned' do
+        context 'When using an assigned value' do
           include_context 'assign a variable'
 
-          it 'expected to be used instead of a color' do
-            env, key = assign
+          shared_examples 'with a color value' do |color|
+            it 'can be used in "ratio:"' do
+              env, key = assign(color)
 
-            ratio = Parser.parse!("ratio: #{key} black", env)
+              ratio = Parser.parse!("ratio: #{key} black", env)
 
-            expect(ratio.evaluate).to eq(19.555999999999997)
+              expect(ratio.evaluate).to eq(19.555999999999997)
+            end
+
+            it 'can be used in "info:"' do
+              env, key = assign(color)
+
+              info = Parser.parse!("info: #{key}", env)
+
+              expect(info.evaluate).to match(/yellow/)
+            end
+
+            it 'can be used in "adjust:"' do
+              env, key = assign(color)
+
+              adjust = Parser.parse!("adjust: black #{key}", env)
+
+              expect(adjust.evaluate.hex).to eq('#808000')
+            end
+          end
+
+          context 'rgb(255 255 0)' do
+            include_examples 'with a color value', 'rgb(255 255 0)'
+          end
+
+          context 'yellow' do
+            include_examples 'with a color value', 'yellow'
+          end
+
+          context '#ff0' do
+            include_examples 'with a color value', '#ff0'
           end
         end
       end
