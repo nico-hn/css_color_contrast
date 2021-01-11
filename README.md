@@ -123,7 +123,7 @@ When the 3rd argument is omitted, it defaults to 4.5.
 
 You can assign a color value to a varible. Variable names begin with @.
 
-```
+```bash
 > @deeper_red: #e00
 #e00
 > ratio: white @deeper_red
@@ -135,6 +135,7 @@ hex: #ee0000
 rgb: rgb(238,0,0)
 hsl: hsl(0.00,100.00%,46.67%)
 hwb: hwb(0.00,0.00%,6.67%)
+> 
 ```
 ## Development
 
