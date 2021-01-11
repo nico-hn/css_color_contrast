@@ -84,13 +84,26 @@ module CssColorContrast
 
           colors.each do |c|
             out.puts '---'
-            out.puts [:name, :hex, :rgb].zip([c.name, c.hex, c.to_s(10)])
-                       .map {|v| v.join(': ') }
-            out.puts format('hsl: hsl(%3.2f,%3.2f%%,%3.2f%%)', *c.hsl)
-            out.puts format('hwb: hwb(%3.2f,%3.2f%%,%3.2f%%)', *c.hwb)
+            out.puts labeled_rgb_values(c)
+            out.puts format_color_function(:hsl, c.hsl)
+            out.puts format_color_function(:hwb, c.hwb)
           end
           out.string
         end
+
+        def labeled_rgb_values(color)
+          %i[name hex rgb]
+            .zip([color.name, color.hex, color.to_s(10)])
+            .map {|v| v.join(': ') }
+        end
+
+        private :labeled_rgb_values
+
+        def format_color_function(scheme, components)
+          format("#{scheme}: #{scheme}(%3.2f,%3.2f%%,%3.2f%%)", *components)
+        end
+
+        private :format_color_function
       end
 
       FUNCTION_TABLE = {
