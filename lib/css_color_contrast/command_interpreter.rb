@@ -13,6 +13,26 @@ module CssColorContrast
       COLOR_SCHEME = /(rgba?|hsl|hwb)/i
     end
 
+    class Value
+      attr_reader :source
+
+      def self.assign(source, env, value = nil)
+        new(source, env, value)
+      end
+
+      def initialize(source, env, value = nil)
+        @source = source
+        @env = env
+        @value = value
+      end
+
+      def evaluate
+        return @env[@source] if @source.start_with?('@')
+
+        @value || @source
+      end
+    end
+
     class Function
       attr_reader :name
       attr_reader :params
@@ -29,13 +49,13 @@ module CssColorContrast
 
       class AssignVariable < self
         def evaluate
-          @env[@name] = @params
+          @env[@name] = @params.map(&:evaluate)
         end
       end
 
       class Ratio < self
         def evaluate
-          ColorContrastCalc.contrast_ratio(*@params)
+          ColorContrastCalc.contrast_ratio(*(@params).map(&:evaluate))
         end
       end
 
@@ -46,7 +66,7 @@ module CssColorContrast
         end
 
         def evaluate
-          fixed, to_adjust, ratio = @params
+          fixed, to_adjust, ratio = @params.map(&:evaluate)
 
           ratio = ratio_given(ratio) ? ratio.to_f : DEFAULT_RATIO
 
@@ -56,7 +76,7 @@ module CssColorContrast
 
       class Info < self
         def evaluate
-          colors = @params.map {|c| Color.as_color(c) }
+          colors = @params.map {|c| Color.as_color(c.evaluate) }
           out = StringIO.new
 
           colors.each do |c|
@@ -124,13 +144,17 @@ module CssColorContrast
       def read_color_function(cur_pos)
         @scanner.pos = cur_pos
         color = Color.as_color(@scanner.scan_until(/\)/))
+        source = @scanner.string[cur_pos..(@scanner.pos)]
+        Value.assign(source, @env, color)
       end
 
       def read_separator
         if @scanner.scan(TokenRe::FUNC_HEAD)
           @node_tree.push(Function.create(@tokens.pop, @env))
         elsif @scanner.scan(TokenRe::SPACE) || @scanner.eos?
-          current_node.push(@tokens.pop)
+          token = @tokens.pop
+          value = token.is_a?(Value) ? token : Value.assign(token, @env)
+          current_node.push(value)
         end
 
         read_label
