@@ -1,0 +1,4 @@
+Layout/SpaceInsideBlockBraces:
+  SpaceBeforeBlockParameters: false
+Documentation:
+  Enabled: false
