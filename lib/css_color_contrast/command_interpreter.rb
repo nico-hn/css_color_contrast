@@ -64,15 +64,16 @@ module CssColorContrast
         end
       end
 
+      FUNCTION_TABLE = {
+        'ratio' => Ratio,
+        'adjust' => AdjustLightness,
+        'info' => Info
+      }.freeze
+
+      private_constant :FUNCTION_TABLE
+
       def self.create(name, env = {})
-        case name
-        when 'ratio'
-          Ratio.new(name, env)
-        when 'adjust'
-          AdjustLightness.new(name, env)
-        when 'info'
-          Info.new(name, env)
-        end
+        FUNCTION_TABLE[name].new(name, env)
       end
     end
 
