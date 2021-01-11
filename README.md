@@ -119,6 +119,23 @@ hwb: hwb(60.00,0.00%,0.00%)
 
 When the 3rd argument is omitted, it defaults to 4.5.
 
+#### Assignment to a variable
+
+You can assign a color value to a varible. Variable names begin with @.
+
+```
+> @deeper_red: #e00
+#e00
+> ratio: white @deeper_red
+4.530325445433122
+> info: @deeper_red
+---
+name: #ee0000
+hex: #ee0000
+rgb: rgb(238,0,0)
+hsl: hsl(0.00,100.00%,46.67%)
+hwb: hwb(0.00,0.00%,6.67%)
+```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
