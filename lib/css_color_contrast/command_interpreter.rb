@@ -136,6 +136,7 @@ module CssColorContrast
         cur_pos = @scanner.pos
         label = @scanner.scan(TokenRe::LABEL)
         return unless label
+
         if TokenRe::COLOR_SCHEME.match?(label)
           @tokens.push read_color_function(cur_pos)
         else
