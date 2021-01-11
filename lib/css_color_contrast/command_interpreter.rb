@@ -93,6 +93,12 @@ module CssColorContrast
         @node_tree.first
       end
 
+      def current_node
+        @node_tree.last
+      end
+
+      private :current_node
+
       def read_label
         cur_pos = @scanner.pos
         label = @scanner.scan(TokenRe::LABEL)
@@ -113,7 +119,7 @@ module CssColorContrast
         if @scanner.scan(TokenRe::FUNC_HEAD)
           @node_tree.push(Function.create(@tokens.pop))
         elsif @scanner.scan(TokenRe::SPACE) || @scanner.eos?
-          @node_tree.last.push(@tokens.pop)
+          current_node.push(@tokens.pop)
         end
 
         read_label
