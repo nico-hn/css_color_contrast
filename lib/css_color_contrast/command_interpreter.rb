@@ -27,6 +27,12 @@ module CssColorContrast
         @params.push(param)
       end
 
+      class AssignVariable < self
+        def evaluate
+          @env[@name] = @params
+        end
+      end
+
       class Ratio < self
         def evaluate
           ColorContrastCalc.contrast_ratio(*@params)
@@ -73,6 +79,8 @@ module CssColorContrast
       private_constant :FUNCTION_TABLE
 
       def self.create(name, env = {})
+        return AssignVariable.new(name, env) if name.start_with?('@')
+
         FUNCTION_TABLE[name].new(name, env)
       end
     end
@@ -120,7 +128,7 @@ module CssColorContrast
 
       def read_separator
         if @scanner.scan(TokenRe::FUNC_HEAD)
-          @node_tree.push(Function.create(@tokens.pop))
+          @node_tree.push(Function.create(@tokens.pop, @env))
         elsif @scanner.scan(TokenRe::SPACE) || @scanner.eos?
           current_node.push(@tokens.pop)
         end

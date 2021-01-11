@@ -50,6 +50,19 @@ RSpec.describe CssColorContrast do
     end
 
     describe CssColorContrast::CommandInterpreter::Function do
+      describe CssColorContrast::CommandInterpreter::Function::AssignVariable do
+        env = {}
+        key = '@yellow'
+
+        let(:assign) { Parser.new("#{key}: rgb(255 255 0)", env) }
+
+        it 'expects to add a key value pair to env' do
+          assign.parse!.root_node.evaluate
+
+          expect(env[key][0].hex).to eq('#ffff00')
+        end
+      end
+
       describe CssColorContrast::CommandInterpreter::Function::Ratio do
         let(:yellow_black_ratio) { Parser.new('ratio: rgb(255 255 0) #000') }
 
