@@ -21,10 +21,12 @@ module CssColorContrast
     end
 
     def self.read_commands
+      env = {}
+
       while line = Readline.readline('> ', true)
         begin
           exit if line.chomp == 'exit'
-          func = CommandInterpreter::Parser.parse!(line.chomp)
+          func = CommandInterpreter::Parser.parse!(line.chomp, env)
           $stdout.puts func.evaluate
         rescue => e
           puts e

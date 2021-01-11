@@ -17,8 +17,9 @@ module CssColorContrast
       attr_reader :name
       attr_reader :params
 
-      def initialize(name)
+      def initialize(name, env = {})
         @name = name
+        @env = env
         @params = []
       end
 
@@ -63,28 +64,29 @@ module CssColorContrast
         end
       end
 
-      def self.create(name)
+      def self.create(name, env = {})
         case name
         when 'ratio'
-          Ratio.new(name)
+          Ratio.new(name, env)
         when 'adjust'
-          AdjustLightness.new(name)
+          AdjustLightness.new(name, env)
         when 'info'
-          Info.new(name)
+          Info.new(name, env)
         end
       end
     end
 
     class Parser
-      def self.parse!(line)
-        self.new(line).parse!.root_node
+      def self.parse!(line, env = {})
+        new(line, env).parse!.root_node
       end
 
       attr_reader :tokens
       attr_reader :node_tree
 
-      def initialize(line)
+      def initialize(line, env = {})
         @scanner = StringScanner.new(line)
+        @env = env
         @tokens = []
         @node_tree = []
       end
