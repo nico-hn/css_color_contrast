@@ -34,8 +34,7 @@ module CssColorContrast
     end
 
     class Function
-      attr_reader :name
-      attr_reader :params
+      attr_reader :name, :params
 
       def initialize(name, env = {})
         @name = name
@@ -114,8 +113,7 @@ module CssColorContrast
         new(line, env).parse!.root_node
       end
 
-      attr_reader :tokens
-      attr_reader :node_tree
+      attr_reader :tokens, :node_tree
 
       def initialize(line, env = {})
         @scanner = StringScanner.new(line)
