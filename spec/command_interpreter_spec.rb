@@ -75,7 +75,7 @@ RSpec.describe CssColorContrast do
           end
         end
 
-        context 'When assigning a varialbe' do
+        context 'When assigning a variable' do
           include_context 'assign a variable'
 
           it 'expects to add a key value pair to env' do
