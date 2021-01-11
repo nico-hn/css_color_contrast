@@ -7,10 +7,10 @@ require 'css_color_contrast'
 module CssColorContrast
   module CommandInterpreter
     module TokenRe
-      FUNC_HEAD = /:\s*/
-      LABEL = /[^\s:()]+/
-      SPACE = /\s+/
-      COLOR_SCHEME = /(rgba?|hsl|hwb)/i
+      FUNC_HEAD = /:\s*/.freeze
+      LABEL = /[^\s:()]+/.freeze
+      SPACE = /\s+/.freeze
+      COLOR_SCHEME = /(rgba?|hsl|hwb)/i.freeze
     end
 
     class Value
