@@ -47,15 +47,19 @@ module CssColorContrast
         @params.push(param)
       end
 
+      def param_values
+        @params.map(&:evaluate).flatten
+      end
+
       class AssignVariable < self
         def evaluate
-          @env[@name] = @params.map(&:evaluate)
+          @env[@name] = param_values
         end
       end
 
       class Ratio < self
         def evaluate
-          ColorContrastCalc.contrast_ratio(*(@params).map(&:evaluate))
+          ColorContrastCalc.contrast_ratio(*param_values)
         end
       end
 
@@ -66,7 +70,7 @@ module CssColorContrast
         end
 
         def evaluate
-          fixed, to_adjust, ratio = @params.map(&:evaluate)
+          fixed, to_adjust, ratio = param_values
 
           ratio = ratio_given(ratio) ? ratio.to_f : DEFAULT_RATIO
 
@@ -76,7 +80,7 @@ module CssColorContrast
 
       class Info < self
         def evaluate
-          colors = @params.map {|c| Color.as_color(c.evaluate) }
+          colors = param_values.map {|c| Color.as_color(c) }
           out = StringIO.new
 
           colors.each do |c|
