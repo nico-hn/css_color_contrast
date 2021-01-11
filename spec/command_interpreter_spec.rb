@@ -64,22 +64,30 @@ RSpec.describe CssColorContrast do
 
     describe CssColorContrast::CommandInterpreter::Function do
       describe CssColorContrast::CommandInterpreter::Function::AssignVariable do
-        let(:assign) {
-          env = {}
-          key = '@yellow'
+        shared_context 'assign a variable' do
+          def assign(value = 'rgb(255 255 0)')
+            env = {}
+            key = '@yellow'
 
-          Parser.parse!("#{key}: rgb(255 255 0)", env).evaluate
+            Parser.parse!("#{key}: #{value}", env).evaluate
 
-          [env, key]
-        }
+            [env, key]
+          end
+        end
 
-        it 'expects to add a key value pair to env' do
-          env, key = assign
+        context 'When assigning a varialbe' do
+          include_context 'assign a variable'
 
-          expect(env[key][0].hex).to eq('#ffff00')
+          it 'expects to add a key value pair to env' do
+            env, key = assign
+
+            expect(env[key][0].hex).to eq('#ffff00')
+          end
         end
 
         context 'When a value is assigned' do
+          include_context 'assign a variable'
+
           it 'expected to be used instead of a color' do
             env, key = assign
 
