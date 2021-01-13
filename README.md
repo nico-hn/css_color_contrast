@@ -102,6 +102,9 @@ that the contrast ratio between the 2 colors is just above the target ratio.
 #ee0000
 > 
 ```
+
+When the 3rd argument is omitted, it defaults to 4.5.
+
 #### info:
 
 Print the properties of a given color:
@@ -116,8 +119,6 @@ hsl: hsl(60.00,100.00%,50.00%)
 hwb: hwb(60.00,0.00%,0.00%)
 > 
 ```
-
-When the 3rd argument is omitted, it defaults to 4.5.
 
 #### Assignment to a variable
 
