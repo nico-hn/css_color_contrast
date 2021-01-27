@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   #spec.description   = %q{TODO: Write a longer description or delete this line.}
   spec.homepage      = "https://github.com/nico-hn/css_color_contrast/"
   spec.license       = "MIT"
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.4")
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org/"
 
